@@ -1,0 +1,45 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".top10_main">
+    <RelativeLayout
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="300px"
+        android:background="@drawable/channel_button_background">
+        <TextView
+            android:text="Top 10"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:background="@drawable/channel_button"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/reload"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/reload"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+    </RelativeLayout>
+    <ListView
+        android:id="@+id/nba_top10_list"
+        android:layout_below="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp">
+    </ListView>
+    <fragment
+        android:id="@+id/adFragment"
+        android:name="bp.com.slamdunk.AdFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

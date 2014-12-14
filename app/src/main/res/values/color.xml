@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFF</color>
+    <color name="video_player_background">#000000</color>
+    <color name="top10_list_background">#EEEEEE</color>
+
+    <color name="text_color">#8D8D8D</color>
+
+    <color name="channel_button_border_blue">#3498DB</color>
+    <color name="channel_button_border_grey">#D8D8D8</color>
+
+</resources>
