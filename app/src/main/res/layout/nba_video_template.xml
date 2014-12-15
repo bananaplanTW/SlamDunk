@@ -33,16 +33,18 @@
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="60dp">
             <RelativeLayout
                 android:id="@+id/bored"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_width="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content">
                 <ImageView
                     android:id="@+id/bored_icon"
-                    android:background="@drawable/bored_button"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bored_button_l1"
                     android:layout_width="40dp"
                     android:layout_height="40dp" />
                 <TextView
@@ -67,15 +69,17 @@
             <RelativeLayout
                 android:id="@+id/awesome"
                 android:layout_alignParentRight="true"
-                android:layout_width="150dp"
+                android:layout_width="190dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginRight="10dp">
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
                 <ImageView
                     android:id="@+id/awesome_icon"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@drawable/awesome_button"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/awesome_button_l1"
                     android:layout_alignParentRight="true"/>
                 <TextView
                     android:id="@+id/awesome_title"

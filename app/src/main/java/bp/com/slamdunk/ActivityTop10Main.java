@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
@@ -29,6 +30,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,7 +48,13 @@ import java.util.zip.Inflater;
 public class ActivityTop10Main extends Activity implements View.OnClickListener, AdapterView.OnItemClickListener{
     private final String TAG = "Top10";
     private ArrayList<NBAVideoInfo> nbaVideoInfoArrayList;
+    private final int LEVEL1 = 100;
+    private final int LEVEL2 = 200;
+    private final int LEVEL3 = 300;
+    private final int LEVEL4 = 400;
+    private final int LEVEL5 = 1000;
 
+    TextView top10TitleTextView;
     ListView nbaTop10ListView;
     ImageView reloadImageView;
     LayoutInflater inflater;
@@ -64,17 +74,22 @@ public class ActivityTop10Main extends Activity implements View.OnClickListener,
 
     private void initViews () {
         getActionBar().hide();
+        top10TitleTextView = (TextView) findViewById(R.id.top10_title);
         nbaTop10ListView = (ListView) findViewById(R.id.nba_top10_list);
         reloadImageView = (ImageView) findViewById(R.id.reload);
     }
 
     private void setViews () {
+
+
         nbaVideoInfoArrayList = new ArrayList<NBAVideoInfo>();
         nbaVideoListAdapter = new NBAVideoListAdapter(this, R.layout.nba_video_template);
         nbaTop10ListView.setAdapter(nbaVideoListAdapter);
         nbaTop10ListView.setOnItemClickListener(this);
         reloadImageView.setOnClickListener(this);
 
+        Typeface font = Typeface.createFromAsset(getAssets(), "futura-medium.ttf");
+        top10TitleTextView.setTypeface(font);
         loadTop10();
     }
 
@@ -242,11 +257,13 @@ public class ActivityTop10Main extends Activity implements View.OnClickListener,
                 TextView boredNumberTextView   = (TextView) view.findViewById(R.id.bored_number);
                 RelativeLayout boredButton     = (RelativeLayout) view.findViewById(R.id.bored);
                 RelativeLayout awesomeButton   = (RelativeLayout) view.findViewById(R.id.awesome);
+                ImageView boredIcon            = (ImageView) view.findViewById(R.id.bored_icon);
+                ImageView awesomeIcon          = (ImageView) view.findViewById(R.id.awesome_icon);
 
                 boredButton.setOnClickListener(this);
                 awesomeButton.setOnClickListener(this);
 
-                nbaVideoInfoViewTag = new NBAVideoInfoViewTag(urlAddress, date, dateTextView, awesomeNumberTextView, boredNumberTextView, awesomeButton, boredButton);
+                nbaVideoInfoViewTag = new NBAVideoInfoViewTag(urlAddress, date, dateTextView, awesomeNumberTextView, boredNumberTextView, awesomeButton, boredButton, awesomeIcon, boredIcon);
                 view.setTag(nbaVideoInfoViewTag);
             } else {
                 nbaVideoInfoViewTag = (NBAVideoInfoViewTag) view.getTag();
@@ -260,6 +277,34 @@ public class ActivityTop10Main extends Activity implements View.OnClickListener,
             nbaVideoInfoViewTag.awesomeButton.setTag(i);
             nbaVideoInfoViewTag.boredButton.setTag(i);
 
+            if (bored < LEVEL1) {
+                nbaVideoInfoViewTag.boredIcon.setBackground(getResources().getDrawable(R.drawable.bored_button_l1));
+            } else if (bored >= LEVEL1 && bored < LEVEL2) {
+                nbaVideoInfoViewTag.boredIcon.setBackground(getResources().getDrawable(R.drawable.bored_button_l2));
+            } else if (bored >= LEVEL2 && bored < LEVEL3) {
+                nbaVideoInfoViewTag.boredIcon.setBackground(getResources().getDrawable(R.drawable.bored_button_l3));
+            } else if (bored >= LEVEL3 && bored < LEVEL4) {
+                nbaVideoInfoViewTag.boredIcon.setBackground(getResources().getDrawable(R.drawable.bored_button_l4));
+            } else if (bored >= LEVEL4 && bored < LEVEL5) {
+                nbaVideoInfoViewTag.boredIcon.setBackground(getResources().getDrawable(R.drawable.bored_button_max));
+            } else if (bored >= LEVEL5) {
+                nbaVideoInfoViewTag.boredIcon.setBackground(getResources().getDrawable(R.drawable.bored_button_blow));
+            }
+
+            if (awesome < LEVEL1) {
+                nbaVideoInfoViewTag.awesomeIcon.setBackground(getResources().getDrawable(R.drawable.awesome_button_l1));
+            } else if (awesome >= LEVEL1 && awesome < LEVEL2) {
+                nbaVideoInfoViewTag.awesomeIcon.setBackground(getResources().getDrawable(R.drawable.awesome_button_l2));
+            } else if (awesome >= LEVEL2 && awesome < LEVEL3) {
+                nbaVideoInfoViewTag.awesomeIcon.setBackground(getResources().getDrawable(R.drawable.awesome_button_l3));
+            } else if (awesome >= LEVEL3 && awesome < LEVEL4) {
+                nbaVideoInfoViewTag.awesomeIcon.setBackground(getResources().getDrawable(R.drawable.awesome_button_l4));
+            } else if (awesome >= LEVEL4 && awesome < LEVEL5) {
+                nbaVideoInfoViewTag.awesomeIcon.setBackground(getResources().getDrawable(R.drawable.awesome_button_max));
+            } else if (awesome >= LEVEL5) {
+                nbaVideoInfoViewTag.awesomeIcon.setBackground(getResources().getDrawable(R.drawable.awesome_button_blow));
+            }
+
             return view;
         }
 
@@ -267,6 +312,9 @@ public class ActivityTop10Main extends Activity implements View.OnClickListener,
         public void onClick(View view) {
             NBAVideoInfo nbaVideoInfo;
             int index;
+            Tracker appTracker = ((Top10Application) getApplication()).getTracker(Top10Application.TrackerName.APP_TRACKER);
+            appTracker.setScreenName("Home");
+            appTracker.enableAdvertisingIdCollection(true);
 
             switch (view.getId()) {
                 case R.id.awesome:
@@ -277,7 +325,30 @@ public class ActivityTop10Main extends Activity implements View.OnClickListener,
                     Log.d(TAG, nbaVideoInfo.awesome.toString());
 
                     TextView awesomeNumber = (TextView) view.findViewById(R.id.awesome_number);
+                    ImageView awesomeIcon  = (ImageView) view.findViewById(R.id.awesome_icon);
+
                     awesomeNumber.setText(nbaVideoInfo.awesome.toString());
+
+                    if (nbaVideoInfo.awesome < LEVEL1) {
+                        awesomeIcon.setBackground(getResources().getDrawable(R.drawable.awesome_button_l1));
+                    } else if (nbaVideoInfo.awesome >= LEVEL1 && nbaVideoInfo.awesome < LEVEL2) {
+                        awesomeIcon.setBackground(getResources().getDrawable(R.drawable.awesome_button_l2));
+                    } else if (nbaVideoInfo.awesome >= LEVEL2 && nbaVideoInfo.awesome < LEVEL3) {
+                        awesomeIcon.setBackground(getResources().getDrawable(R.drawable.awesome_button_l3));
+                    } else if (nbaVideoInfo.awesome >= LEVEL3 && nbaVideoInfo.awesome < LEVEL4) {
+                        awesomeIcon.setBackground(getResources().getDrawable(R.drawable.awesome_button_l4));
+                    } else if (nbaVideoInfo.awesome >= LEVEL4 && nbaVideoInfo.awesome < LEVEL5) {
+                        awesomeIcon.setBackground(getResources().getDrawable(R.drawable.awesome_button_max));
+                    } else if (nbaVideoInfo.awesome >= LEVEL5) {
+                        awesomeIcon.setBackground(getResources().getDrawable(R.drawable.awesome_button_blow));
+                    }
+
+
+
+                    appTracker.send(new HitBuilders.EventBuilder()
+                            .setCategory("Preference")
+                            .setAction("Awesome")
+                            .build());
                     break;
                 case R.id.bored:
                     index = (Integer) view.getTag();
@@ -286,7 +357,28 @@ public class ActivityTop10Main extends Activity implements View.OnClickListener,
                     nbaVideoInfo.addBored ++;
 
                     TextView boredNumber = (TextView) view.findViewById(R.id.bored_number);
+                    ImageView boredIcon = (ImageView) view.findViewById(R.id.bored_icon);
+
                     boredNumber.setText(nbaVideoInfo.bored.toString());
+
+                    if (nbaVideoInfo.bored < LEVEL1) {
+                        boredIcon.setBackground(getResources().getDrawable(R.drawable.bored_button_l1));
+                    } else if (nbaVideoInfo.bored >= LEVEL1 && nbaVideoInfo.bored < LEVEL2) {
+                        boredIcon.setBackground(getResources().getDrawable(R.drawable.bored_button_l2));
+                    } else if (nbaVideoInfo.bored >= LEVEL2 && nbaVideoInfo.bored < LEVEL3) {
+                        boredIcon.setBackground(getResources().getDrawable(R.drawable.bored_button_l3));
+                    } else if (nbaVideoInfo.bored >= LEVEL3 && nbaVideoInfo.bored < LEVEL4) {
+                        boredIcon.setBackground(getResources().getDrawable(R.drawable.bored_button_l4));
+                    } else if (nbaVideoInfo.bored >= LEVEL4 && nbaVideoInfo.bored < LEVEL5) {
+                        boredIcon.setBackground(getResources().getDrawable(R.drawable.bored_button_max));
+                    } else if (nbaVideoInfo.bored >= LEVEL5) {
+                        boredIcon.setBackground(getResources().getDrawable(R.drawable.bored_button_blow));
+                    }
+
+                    appTracker.send(new HitBuilders.EventBuilder()
+                            .setCategory("Preference")
+                            .setAction("Boring")
+                            .build());
                     break;
             }
         }
@@ -298,10 +390,12 @@ public class ActivityTop10Main extends Activity implements View.OnClickListener,
             TextView awesomeNumberTextView;
             TextView boredNumberTextView;
             RelativeLayout awesomeButton, boredButton;
+            ImageView awesomeIcon, boredIcon;
             public NBAVideoInfoViewTag(String urlAddress,
                                        Date date, TextView dateTextView,
                                        TextView awesomeNumberTextView, TextView boredNumberTextView,
-                                       RelativeLayout awesomeButton, RelativeLayout boredButton) {
+                                       RelativeLayout awesomeButton, RelativeLayout boredButton,
+                                       ImageView awesomeIcon, ImageView boredIcon) {
                 this.urlAddress = urlAddress;
                 this.date = date;
                 this.dateTextView = dateTextView;
@@ -309,6 +403,8 @@ public class ActivityTop10Main extends Activity implements View.OnClickListener,
                 this.boredNumberTextView = boredNumberTextView;
                 this.awesomeButton = awesomeButton;
                 this.boredButton = boredButton;
+                this.awesomeIcon = awesomeIcon;
+                this.boredIcon = boredIcon;
             }
         }
     }
