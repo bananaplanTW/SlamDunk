@@ -1,4 +1,4 @@
-package bp.com.slamdunk;
+package bp.com.slamdunktop10;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

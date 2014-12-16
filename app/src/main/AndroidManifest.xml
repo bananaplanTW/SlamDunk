@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="bp.com.slamdunk" >
+    package="bp.com.slamdunktop10" >
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -10,13 +10,14 @@
         android:icon="@drawable/top10_logo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-        android:name=".Top10Application">
+        android:name="bp.com.slamdunktop10.Top10Application">
         <!--This meta-data tag is required to use Google Play Services.-->
         <meta-data android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         <activity
-            android:name=".ActivityTop10Main"
-            android:label="@string/app_name" >
+            android:name="bp.com.slamdunktop10.ActivityTop10Main"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,10 +26,14 @@
         </activity>
 
         <activity
-            android:name=".ActivityPlayVideo"
+            android:name="bp.com.slamdunktop10.ActivityPlayVideo"
             android:configChanges="orientation|screenSize">
 
         </activity>
+
+        <activity android:name=".ActivityHighlight"
+            android:screenOrientation="portrait"
+            ></activity>
 
         <!--Include the AdActivity configChanges and theme. -->
         <activity android:name="com.google.android.gms.ads.AdActivity"

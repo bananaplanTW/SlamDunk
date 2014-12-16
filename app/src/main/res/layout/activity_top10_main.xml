@@ -7,7 +7,7 @@
     <RelativeLayout
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="200px"
+        android:layout_height="80dp"
         android:background="@drawable/channel_button_background">
         <!--TextView
             android:text="Top 10"
@@ -21,10 +21,43 @@
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" /-->
-        <TextView
+        <RadioGroup
+            android:id="@+id/top10_highlight"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/top10_title"
+                android:text="TOP 10"
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@android:color/transparent"
+                android:background="@drawable/channel_button"
+                android:padding="10dp"
+                android:checked="true"/>
+            <RadioButton
+                android:id="@+id/highlight_title"
+                android:text="Highlight"
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@android:color/transparent"
+                android:padding="10dp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/channel_button"/>
+        </RadioGroup>
+        <!--TextView
             android:id="@+id/top10_title"
             android:text="TOP 10"
-            android:textSize="28dp"
+            android:textSize="20dp"
             android:textColor="@color/white"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
@@ -33,6 +66,20 @@
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/highlight_title"
+            android:text="TOP 10"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:layout_toRightOf="@+id/top10_title"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:background="@drawable/channel_button"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" /-->
         <ImageView
             android:id="@+id/reload"
             android:background="@drawable/loading_button"
@@ -49,9 +96,17 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="50dp">
     </ListView>
+    <ListView
+        android:id="@+id/nba_highlight_list"
+        android:layout_below="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
+        android:visibility="gone">
+    </ListView>
     <fragment
         android:id="@+id/adFragment"
-        android:name="bp.com.slamdunk.AdFragment"
+        android:name="bp.com.slamdunktop10.AdFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true" />

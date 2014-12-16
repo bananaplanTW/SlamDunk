@@ -1,0 +1,55 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".top10_main">
+    <RelativeLayout
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/channel_button_background">
+        <TextView
+            android:id="@+id/highlight_date"
+            android:text="Dec 12"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/highlight_title"
+            android:text="Highlight"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:layout_toRightOf="@+id/highlight_date"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/reload"
+            android:background="@drawable/loading_button"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <ListView
+        android:id="@+id/nba_highlight_list"
+        android:layout_below="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp">
+    </ListView>
+    <fragment
+        android:id="@+id/adFragment"
+        android:name="bp.com.slamdunktop10.AdFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>
